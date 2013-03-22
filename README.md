@@ -1,7 +1,7 @@
 # Gucky
 
 Gucky, nicht zu verwechseln mit dem [Mausbiber][], ist eine kleine App für OS X.
-Sie setzt sich in die Statusleiste von OS X und verfolgt im guten alten [Xeyes]]
+Sie setzt sich in die Statusleiste von OS X und verfolgt im guten alten [Xeyes][]
 Style die Bewegung der Maus.
 Eine kleine Anleitung und ein Download der fertig kompilierten App ist bei mir
 im Blog unter [Gucky][] zu finden.
