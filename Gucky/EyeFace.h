@@ -14,6 +14,7 @@
 // create the needed images.
 @interface EyeFace : NSObject {
     NSPoint saveLeftPupil, saveRightPupil;
+    BOOL isRetina;
 }
 
 // properties

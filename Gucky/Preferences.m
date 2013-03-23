@@ -25,6 +25,8 @@
         self->_rightEyeOutlineColor = self.leftEyeOutlineColor;
         self->_rightEyeColor = self.leftEyeColor;
         self->_rightEyePupilColor = self.leftEyePupilColor;
+        // other defaults
+        self->_eyeSync = TRUE;
         // user default
         [self createUserDefaults];
         [self loadUserDefaults];
@@ -44,7 +46,7 @@
                               [NSKeyedArchiver archivedDataWithRootObject:self.rightEyeOutlineColor], @"RightEyeOutlineColor",
                               [NSKeyedArchiver archivedDataWithRootObject:self.rightEyeColor], @"RightEyeColor",
                               [NSKeyedArchiver archivedDataWithRootObject:self.rightEyePupilColor], @"RightEyePupilColor",
-                              @"YES", @"EyeSync",
+                              [NSNumber numberWithBool:self.eyeSync], @"EyeSync",
                               nil];
     
     NSArray *resettableDefaults = [NSArray arrayWithObjects:@"LeftEyeDiameter", @"LeftEyeOutlineColor", @"LeftEyeColor", @"LeftEyePupilColor", @"RightEyeDiameter", @"RightEyeOutlineColor", @"RightEyeColor", @"RightEyePupilColor", @"EyeSync", nil];

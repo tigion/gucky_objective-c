@@ -15,7 +15,12 @@
 
 - (id)init {
     self = [super init];
-    if (self != nil) {        
+    if (self != nil) {
+        // check retina (HiDPI)
+        isRetina = false;
+        if ([[[NSScreen alloc] init] backingScaleFactor] == 2)
+            isRetina = true;
+        
         //
         self->_leftEye = [[Eye alloc] init];
         self->_rightEye = [[Eye alloc] init];
@@ -50,12 +55,13 @@
 - (void)calcCenterForAllEyes {
     CGFloat x, y;
     
-    // hight: 21px = 22px status item - 1px black bottom line (hard coded!)
-    self->_size = NSMakeSize([self calcWidth], 21);
+    // height: 21px = 22px status item - 1px black bottom line (hard coded!)
+    // retina no/yes: 12px/22px, 0/0.5 
+    self->_size = NSMakeSize([self calcWidth], ((isRetina) ? 22 : 21)); // retina dependent
     
     // left eye
     x = [self.leftEye diameter] / 2.0f;
-    y = self.size.height / 2.0f;
+    y = self.size.height / 2.0f - ((isRetina) ? 0.5 : 0); // retina dependent
     [self.leftEye setCenter:NSMakePoint(x, y)];
     
     // right eye
