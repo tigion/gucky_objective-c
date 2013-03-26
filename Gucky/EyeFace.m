@@ -7,6 +7,7 @@
 //
 
 #import "EyeFace.h"
+#import "EyeSet.h"
 #import "Eye.h"
 
 @implementation EyeFace
@@ -21,7 +22,7 @@
         if ([[[NSScreen alloc] init] backingScaleFactor] == 2)
             isRetina = true;
         
-        //
+        // init eyes
         self->_leftEye = [[Eye alloc] init];
         self->_rightEye = [[Eye alloc] init];
         self->_eyeSpace = 1;
@@ -37,16 +38,38 @@
 
 // special inits
 
-- (id)initWithLeftEye:(Eye*)aLeftEye rightEye:(Eye*)aRightEye {
+- (id)initWithEyeSet:(EyeSet*)aEyeSet {
     self = [self init];
     if (self != nil) {
-        self->_leftEye = aLeftEye;
-        self->_rightEye = aRightEye;
+        // init eyes
+        [self setEyesWithEyeSet:aEyeSet];
+        
+        // calculate
+        [self calcCenterForAllEyes];
+        
+        // create image background
+        [self makeEyeballImage];
     }
     return self;
 }
 
 // methods
+
+- (void)setEyesWithEyeSet:(EyeSet*)aEyeSet {
+    Eye *eyeL = [[Eye alloc] initWithDiameter:[aEyeSet leftEyeDiameter]
+                                 outlineColor:[aEyeSet leftEyeOutlineColor]
+                                 eyeballColor:[aEyeSet leftEyeEyeballColor]
+                                   pupilColor:[aEyeSet leftEyePupilColor]];
+    Eye *eyeR = [[Eye alloc] initWithDiameter:[aEyeSet rightEyeDiameter]
+                                 outlineColor:[aEyeSet rightEyeOutlineColor]
+                                 eyeballColor:[aEyeSet rightEyeEyeballColor]
+                                   pupilColor:[aEyeSet rightEyePupilColor]];
+    self.leftEye = eyeL;
+    self.rightEye = eyeR;
+    
+    //self.eyeSync
+    //self.eyeSpace
+}
 
 - (CGFloat)calcWidth {
     return [self.leftEye diameter] + self.eyeSpace + [self.rightEye diameter];
@@ -194,6 +217,7 @@
 
 - (void)forceRefresh:(NSPoint)aTarget {
     [self calcCenterForAllEyes];
+    //if (aTarget.x != 0 || aTarget.y != 0)
     [self calcLookForAllEyesWithTarget:aTarget];
     [self makeEyeballImage];
     [self makeEyeImage];

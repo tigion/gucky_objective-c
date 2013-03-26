@@ -16,6 +16,7 @@
 		593CF99D16F4885C0027AC72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 593CF99C16F4885C0027AC72 /* AppDelegate.m */; };
 		593CF9A016F4885C0027AC72 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 593CF99E16F4885C0027AC72 /* MainMenu.xib */; };
 		59907ED316F8C636000C8A54 /* gucky.icns in Resources */ = {isa = PBXBuildFile; fileRef = 59907ED216F8C636000C8A54 /* gucky.icns */; };
+		59B6A520170180D8002ADFF8 /* EyeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B6A51F170180D8002ADFF8 /* EyeSet.m */; };
 		59BD0B8C16F8ED17001EAC26 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BD0B8B16F8ED17001EAC26 /* Preferences.m */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,8 @@
 		593CF99C16F4885C0027AC72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		593CF99F16F4885C0027AC72 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		59907ED216F8C636000C8A54 /* gucky.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = gucky.icns; sourceTree = "<group>"; };
+		59B6A51E170180D8002ADFF8 /* EyeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyeSet.h; sourceTree = "<group>"; };
+		59B6A51F170180D8002ADFF8 /* EyeSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EyeSet.m; sourceTree = "<group>"; };
 		59BD0B8A16F8ED17001EAC26 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		59BD0B8B16F8ED17001EAC26 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +107,8 @@
 				591D5D8816F64EFC00E491CC /* EyeFace.m */,
 				59BD0B8A16F8ED17001EAC26 /* Preferences.h */,
 				59BD0B8B16F8ED17001EAC26 /* Preferences.m */,
+				59B6A51E170180D8002ADFF8 /* EyeSet.h */,
+				59B6A51F170180D8002ADFF8 /* EyeSet.m */,
 			);
 			path = Gucky;
 			sourceTree = "<group>";
@@ -190,6 +195,7 @@
 				591D5D8616F64EE100E491CC /* Eye.m in Sources */,
 				591D5D8916F64EFC00E491CC /* EyeFace.m in Sources */,
 				59BD0B8C16F8ED17001EAC26 /* Preferences.m in Sources */,
+				59B6A520170180D8002ADFF8 /* EyeSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

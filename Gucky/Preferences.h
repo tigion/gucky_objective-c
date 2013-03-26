@@ -8,15 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+@class EyeSet;
+
 // The Preferences class holds the app specific settings
 // and handles the communication with the user defaults.
 @interface Preferences : NSObject
 
 // The Properties for the storable settings.
-@property CGFloat leftEyeDiameter, rightEyeDiameter;
-@property NSColor *leftEyeColor, *leftEyeOutlineColor, *leftEyePupilColor;
-@property NSColor *rightEyeColor, *rightEyeOutlineColor, *rightEyePupilColor;
-@property (getter = isEyeSync) BOOL eyeSync;
+@property EyeSet *presetDefault, *presetSet1, *presetSet2;
+@property EyeSet *eyeSetCurrent, *eyeSetUser;
+
+// Sets the presets.
+- (void)setPresets;
+
+// Sets the settings for a key string.
+- (void)setPresetforKey:(NSString*)aKey;
 
 // Creates the initial and resettable user defaults.
 - (void)createUserDefaults;

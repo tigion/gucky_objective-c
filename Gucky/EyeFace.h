@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class Eye;
+@class EyeSet, Eye;
 
 // The EyeFace class hold the eyes, calculate the positions and
 // create the needed images.
@@ -24,10 +24,13 @@
 @property (readonly) NSSize size;
 @property (readonly) NSImage *eyeballImage, *pupilImage;
 
-// A special initializer with left and right eye.
-- (id)initWithLeftEye:(Eye*)aLeftEye rightEye:(Eye*)aRightEye;
+// A special initializer with an EyeSet.
+- (id)initWithEyeSet:(EyeSet*)aEyeSet;
 
 // methods
+
+// Sets the eyes with a EyeSet.
+- (void)setEyesWithEyeSet:(EyeSet*)aEyeSet;
 
 // Calculates the face width.
 - (CGFloat)calcWidth;

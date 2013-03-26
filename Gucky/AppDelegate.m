@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "Preferences.h"
 #import "EyeFace.h"
+#import "EyeSet.h"
 #import "Eye.h"
 
 @implementation AppDelegate
@@ -31,10 +32,16 @@
     
     // set settings to the face and preferences window
     [self setPreferences];
+    [self setButtonPresetImageWithEyeSet:[pref eyeSetUser] forSegment:3];
     
     // preferences: set about infos
     [self setAboutInfos];
-
+    
+    // set Default, 1, 2 button images
+    [self setButtonPresetImageWithEyeSet:[pref presetDefault] forSegment:0];
+    [self setButtonPresetImageWithEyeSet:[pref presetSet1] forSegment:1];
+    [self setButtonPresetImageWithEyeSet:[pref presetSet2] forSegment:2];
+    
     // register mouse move event handler
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^(NSEvent *mouseEvent) {
         [self myMouseMoved:[NSEvent mouseLocation]];
@@ -49,18 +56,19 @@
     // close settings window
     if ([[notification object] isEqual:self.windowPreferences]) {
         // save settings
-        [pref setLeftEyeDiameter:[self.sliderLeftEyeSize integerValue]];
-        [pref setLeftEyeOutlineColor:[self.leftEyeOutlineColor color]];
-        [pref setLeftEyeColor:[self.leftEyeColor color]];
-        [pref setLeftEyePupilColor:[self.leftEyePupilColor color]];
-        [pref setRightEyeDiameter:[self.sliderRightEyeSize integerValue]];
-        [pref setRightEyeOutlineColor:[self.rightEyeOutlineColor color]];
-        [pref setRightEyeColor:[self.rightEyeColor color]];
-        [pref setRightEyePupilColor:[self.rightEyePupilColor color]];
-        [pref setEyeSync:[self.buttonSyncOnOff state]];
+        [[pref eyeSetCurrent] setLeftEyeDiameter:[self.sliderLeftEyeSize integerValue]];
+        [[pref eyeSetCurrent] setLeftEyeOutlineColor:[self.leftEyeOutlineColor color]];
+        [[pref eyeSetCurrent] setLeftEyeEyeballColor:[self.leftEyeColor color]];
+        [[pref eyeSetCurrent] setLeftEyePupilColor:[self.leftEyePupilColor color]];
+        [[pref eyeSetCurrent] setRightEyeDiameter:[self.sliderRightEyeSize integerValue]];
+        [[pref eyeSetCurrent] setRightEyeOutlineColor:[self.rightEyeOutlineColor color]];
+        [[pref eyeSetCurrent] setRightEyeEyeballColor:[self.rightEyeColor color]];
+        [[pref eyeSetCurrent] setRightEyePupilColor:[self.rightEyePupilColor color]];
+        [[pref eyeSetCurrent] setEyeSync:[self.buttonSyncOnOff state]];
         [pref saveUserDefaults];
-        // set new position and refresh statusbar image
+        // set new position
         [self detectStatusItemPosition];
+        // refresh statusbar image
         [self forceStatusItemImageRefresh];
     }
 }
@@ -96,7 +104,9 @@
     } else if ([sender isEqual:self.sliderRightEyeSize])
         [[face rightEye] setDiameter:[sender integerValue]];
     
+    [self saveUserSettings];
     [self forceStatusItemImageRefresh];
+    [self setButtonPresetImageWithEyeSet:[pref eyeSetUser] forSegment:3];
     [sender display]; // display error fix
 }
 
@@ -126,18 +136,20 @@
     else if ([sender isEqual:self.rightEyePupilColor])
         [[face rightEye] setPupilColor:[sender color]];
     
+    [self saveUserSettings];
     [self forceStatusItemImageRefresh];
+    [self setButtonPresetImageWithEyeSet:[pref eyeSetUser] forSegment:3];
     [sender display]; // display error fix
-}
-
-- (IBAction)buttonResetSettings:(id)sender {
-    [pref resetDefaults];
-    
-    [self setPreferences];
 }
 
 - (IBAction)buttonSyncOnOff:(id)sender {
     [self syncOnOff:[sender state]];
+    [self saveUserSettings];
+    [self setButtonPresetImageWithEyeSet:[pref eyeSetUser] forSegment:3];
+}
+
+- (IBAction)buttonPresetSettings:(id)sender {
+    [self selectSetting:[sender selectedSegment]];
 }
 
 // methods
@@ -164,9 +176,52 @@
         [statusItem setImage:[face pupilImage]];
 }
 
+- (void)setButtonPresetImageWithEyeSet:(EyeSet*)aEyeSet forSegment:(NSInteger)aSegment {
+    EyeFace *tmpFace = [[EyeFace alloc] initWithEyeSet:aEyeSet];
+    [tmpFace forceRefresh:NSMakePoint(-200, -400)];
+    [[self buttonPresets] setLabel:nil forSegment:aSegment];
+    [[self buttonPresets] setImageScaling:NSImageScaleNone forSegment:aSegment];
+    
+    NSImage *temp = [[tmpFace pupilImage] copy];
+    CGFloat height = [[self buttonPresets] frame].size.height - 4.0f;
+    [temp setSize:NSMakeSize([temp size].width * height / [temp size].height, height)];
+    [[self buttonPresets] setImage:temp forSegment:aSegment];
+}
+
 - (void)forceStatusItemImageRefresh {
     [face forceRefresh:[NSEvent mouseLocation]];
     [statusItem setImage:[face pupilImage]];
+}
+
+- (void)saveUserSettings {
+    [[pref eyeSetUser] setLeftEyeDiameter:[self.sliderLeftEyeSize integerValue]];
+    [[pref eyeSetUser] setLeftEyeOutlineColor:[self.leftEyeOutlineColor color]];
+    [[pref eyeSetUser] setLeftEyeEyeballColor:[self.leftEyeColor color]];
+    [[pref eyeSetUser] setLeftEyePupilColor:[self.leftEyePupilColor color]];
+    [[pref eyeSetUser] setRightEyeDiameter:[self.sliderRightEyeSize integerValue]];
+    [[pref eyeSetUser] setRightEyeOutlineColor:[self.rightEyeOutlineColor color]];
+    [[pref eyeSetUser] setRightEyeEyeballColor:[self.rightEyeColor color]];
+    [[pref eyeSetUser] setRightEyePupilColor:[self.rightEyePupilColor color]];
+    [[pref eyeSetUser] setEyeSync:[self.buttonSyncOnOff state]];
+}
+
+- (void)selectSetting:(NSInteger)aSet {
+    // switch preset
+    switch (aSet) {
+        case 0: // oo - default
+            [pref setPresetforKey:@"Default"];
+            break;
+        case 1: // oO
+            [pref setPresetforKey:@"Preset 1"];
+            break;
+        case 2: // OO
+            [pref setPresetforKey:@"Preset 2"];
+            break;
+        case 3: // user
+            [pref setPresetforKey:@"User"];
+            break;
+    }
+    [self setPreferences];
 }
 
 - (void)syncOnOff:(bool)aState {
@@ -200,30 +255,21 @@
 
 - (void)setPreferences {
     // set the face
-    // left eye
-    [[face leftEye] setDiameter:[pref leftEyeDiameter]];
-    [[face leftEye] setOutlineColor:[pref leftEyeOutlineColor]];
-    [[face leftEye] setEyeballColor:[pref leftEyeColor]];
-    [[face leftEye] setPupilColor:[pref leftEyePupilColor]];
-    // right eye
-    [[face rightEye] setDiameter:[pref rightEyeDiameter]];
-    [[face rightEye] setOutlineColor:[pref rightEyeOutlineColor]];
-    [[face rightEye] setEyeballColor:[pref rightEyeColor]];
-    [[face rightEye] setPupilColor:[pref rightEyePupilColor]];
+    [face setEyesWithEyeSet:[pref eyeSetCurrent]];
     
     // set the preferences window
     // left eye
-    [self.sliderLeftEyeSize setFloatValue:[pref leftEyeDiameter]];
-    [self.leftEyeOutlineColor setColor:[pref leftEyeOutlineColor]];
-    [self.leftEyeColor setColor:[pref leftEyeColor]];
-    [self.leftEyePupilColor setColor:[pref leftEyePupilColor]];
+    [self.sliderLeftEyeSize setFloatValue:[[pref eyeSetCurrent] leftEyeDiameter]];
+    [self.leftEyeOutlineColor setColor:[[pref eyeSetCurrent] leftEyeOutlineColor]];
+    [self.leftEyeColor setColor:[[pref eyeSetCurrent] leftEyeEyeballColor]];
+    [self.leftEyePupilColor setColor:[[pref eyeSetCurrent] leftEyePupilColor]];
     // right eye
-    [self.sliderRightEyeSize setFloatValue:[pref rightEyeDiameter]];
-    [self.rightEyeOutlineColor setColor:[pref rightEyeOutlineColor]];
-    [self.rightEyeColor setColor:[pref rightEyeColor]];
-    [self.rightEyePupilColor setColor:[pref rightEyePupilColor]];
+    [self.sliderRightEyeSize setFloatValue:[[pref eyeSetCurrent] rightEyeDiameter]];
+    [self.rightEyeOutlineColor setColor:[[pref eyeSetCurrent] rightEyeOutlineColor]];
+    [self.rightEyeColor setColor:[[pref eyeSetCurrent] rightEyeEyeballColor]];
+    [self.rightEyePupilColor setColor:[[pref eyeSetCurrent] rightEyePupilColor]];
     // extra
-    [self.buttonSyncOnOff setState:[pref isEyeSync]];
+    [self.buttonSyncOnOff setState:[[pref eyeSetCurrent] isEyeSync]];
     [self syncOnOff:[self.buttonSyncOnOff state]];
     
     // get status item position

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class Preferences;
-@class EyeFace, Eye;
+@class EyeFace, EyeSet, Eye;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     // status item
@@ -45,6 +45,8 @@
 @property (weak) IBOutlet NSColorWell *rightEyePupilColor;
 @property (weak) IBOutlet NSButton *buttonSyncOnOff;
 
+@property (weak) IBOutlet NSSegmentedControl *buttonPresets;
+
 // status menu actions
 - (IBAction)actionMenuRefreshPosition:(id)sender;
 - (IBAction)actionMenuPreferences:(id)sender;
@@ -52,8 +54,8 @@
 // setting window actions
 - (IBAction)actionChangeEyeSize:(id)sender;
 - (IBAction)actionChangeColor:(id)sender;
-- (IBAction)buttonResetSettings:(id)sender;
 - (IBAction)buttonSyncOnOff:(id)sender;
+- (IBAction)buttonPresetSettings:(id)sender;
 
 // methods
 
@@ -63,8 +65,18 @@
 // Checks and sets if a new StatusItem image is needed.
 - (void)myMouseMoved:(NSPoint)point;
 
-// Forces an StatusImage refresh.
+// Sets an image for a given EyeSet and button segment.
+- (void)setButtonPresetImageWithEyeSet:(EyeSet*)aEyeSet
+                            forSegment:(NSInteger)aSegment;
+
+// Forces a StatusImage refresh.
 - (void)forceStatusItemImageRefresh;
+
+// Saves temporary user settings.
+- (void)saveUserSettings;
+
+// Selects a preset.
+- (void)selectSetting:(NSInteger)aSet;
 
 // Syncs the preference settings.
 - (void)syncOnOff:(bool)aState;
