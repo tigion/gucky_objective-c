@@ -46,6 +46,7 @@
 @property (weak) IBOutlet NSButton *buttonSyncOnOff;
 
 @property (weak) IBOutlet NSSegmentedControl *buttonPresets;
+@property (weak) IBOutlet NSButton *buttonLaunchAtLogin;
 
 // status menu actions
 - (IBAction)actionMenuRefreshPosition:(id)sender;
