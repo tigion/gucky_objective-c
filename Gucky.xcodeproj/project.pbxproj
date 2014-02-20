@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12FF89C818B5986B006CC750 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12FF89C718B5986B006CC750 /* LaunchAtLoginController.m */; };
 		591D5D8616F64EE100E491CC /* Eye.m in Sources */ = {isa = PBXBuildFile; fileRef = 591D5D8516F64EE100E491CC /* Eye.m */; };
 		591D5D8916F64EFC00E491CC /* EyeFace.m in Sources */ = {isa = PBXBuildFile; fileRef = 591D5D8816F64EFC00E491CC /* EyeFace.m */; };
 		593CF98A16F4885C0027AC72 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593CF98916F4885C0027AC72 /* Cocoa.framework */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12FF89C618B5986B006CC750 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LaunchAtLoginController.h; path = Resources/LaunchAtLoginController.h; sourceTree = "<group>"; };
+		12FF89C718B5986B006CC750 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LaunchAtLoginController.m; path = Resources/LaunchAtLoginController.m; sourceTree = "<group>"; };
 		591D5D8416F64EE100E491CC /* Eye.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Eye.h; sourceTree = "<group>"; };
 		591D5D8516F64EE100E491CC /* Eye.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Eye.m; sourceTree = "<group>"; };
 		591D5D8716F64EFC00E491CC /* EyeFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyeFace.h; sourceTree = "<group>"; };
@@ -57,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12FF89C518B59843006CC750 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				12FF89C618B5986B006CC750 /* LaunchAtLoginController.h */,
+				12FF89C718B5986B006CC750 /* LaunchAtLoginController.m */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		593CF97D16F4885C0027AC72 = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +109,7 @@
 		593CF98F16F4885C0027AC72 /* Gucky */ = {
 			isa = PBXGroup;
 			children = (
+				12FF89C518B59843006CC750 /* Resources */,
 				593CF99B16F4885C0027AC72 /* AppDelegate.h */,
 				593CF99C16F4885C0027AC72 /* AppDelegate.m */,
 				593CF99E16F4885C0027AC72 /* MainMenu.xib */,
@@ -195,6 +208,7 @@
 				591D5D8616F64EE100E491CC /* Eye.m in Sources */,
 				591D5D8916F64EFC00E491CC /* EyeFace.m in Sources */,
 				59BD0B8C16F8ED17001EAC26 /* Preferences.m in Sources */,
+				12FF89C818B5986B006CC750 /* LaunchAtLoginController.m in Sources */,
 				59B6A520170180D8002ADFF8 /* EyeSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

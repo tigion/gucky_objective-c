@@ -11,6 +11,7 @@
 #import "EyeFace.h"
 #import "EyeSet.h"
 #import "Eye.h"
+#import "LaunchAtLoginController.h"
 
 @implementation AppDelegate
 
@@ -90,6 +91,14 @@
     [preferencesWindowController showWindow:sender];
     // force preference window to front
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    
+    LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
+    
+    if([launchController willLaunchAtLogin:launchController.appURL]) {
+        [self.buttonLaunchAtLogin setState:NSOnState];
+    } else {
+        [self.buttonLaunchAtLogin setState:NSOffState];
+    }
 }
 
 // setting window actions
@@ -152,6 +161,10 @@
     [self selectSetting:[sender selectedSegment]];
 }
 
+-(IBAction)launchAtLogin:(id)sender {
+    LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
+    [launchController setLaunchAtLogin:([self.buttonLaunchAtLogin state]==NSOnState)];
+}
 // methods
 
 - (void)detectStatusItemPosition {
